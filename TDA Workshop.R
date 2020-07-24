@@ -234,7 +234,7 @@ by <- 0.1
 
 1 -> maxdimension
 
-10 -> B
+10 -> B   # Should use a larger value; this is just for speed
 set.seed(42)
 cc <- bootstrapDiagram(X = funval, kde,
                        lim = Ylim, # Only one dimension, not two
@@ -248,4 +248,13 @@ cc <- bootstrapDiagram(X = funval, kde,
 # The 200 is arbitrary to make things a bit easier. This needs some
 #  further investigation in the context of smoothing. With that
 #  value, however, only 11 of the 37 features are significant.
-plot(walk.diag[['diagram']], band = 200 * cc)
+
+{
+  par() -> old_par
+  par(mfrow = c(1,2))
+  plot(walk1_df$Time, walk1_df$ankleAngle, 
+       type = 'l',
+       xlab = "Time", ylab = "Ankle Angle")
+  plot(walk.diag[['diagram']], band = 200 * cc)
+  old_par -> par
+}
